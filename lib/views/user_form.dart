@@ -7,8 +7,19 @@ class UserForm extends StatelessWidget {
   final _form = GlobalKey<FormState>();
   final Map<String, String> _formData = {};
 
+  void _loadFormData(User user) {
+    _formData['id'] = user.id.toString();
+    _formData['name'] = user.name.toString();
+    _formData['email'] = user.email.toString();
+    _formData['avatarUrl'] = user.avatarUrl.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = ModalRoute.of(context)!.settings.arguments as User;
+
+    _loadFormData(user);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Formulário de Usuário'),
@@ -43,6 +54,7 @@ class UserForm extends StatelessWidget {
           child: Column(
             children: <Widget>[
               TextFormField(
+                initialValue: _formData['name'],
                 decoration: const InputDecoration(
                   labelText: 'Nome',
                 ),
@@ -60,6 +72,7 @@ class UserForm extends StatelessWidget {
                 },
               ),
               TextFormField(
+                initialValue: _formData['email'],
                 decoration: const InputDecoration(
                   labelText: 'E-mail',
                 ),
@@ -69,6 +82,7 @@ class UserForm extends StatelessWidget {
                 },
               ),
               TextFormField(
+                initialValue: _formData['avatarUrl'],
                 decoration: const InputDecoration(
                   labelText: 'URL do Avatar',
                 ),
